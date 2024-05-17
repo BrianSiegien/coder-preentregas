@@ -1,4 +1,4 @@
-import { __dirname } from "../path.js";
+import { __dirname } from "../utils.js";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import {ProductManager} from "../managers/product.manager.js";
@@ -49,14 +49,13 @@ export default class CartManager {
     }
   }
 
-  async saveProductToCart(idCart, idProduct) { 
+  async ProductToCart(idCart, idProduct) { 
     try {
       const prodExist = await productManager.getProductById(idProduct);
       if(!prodExist) throw new Error('Product not found');
       let carts = await this.getCarts();
       const cartExist = await this.getCartById(idCart);
       if(!cartExist) throw new Error('Cart not found');
-      // console.log(cartExist);
       const existProdInCart = cartExist.products.find((prod) => prod.product === idProduct);
       if(!existProdInCart){
         const prod = {

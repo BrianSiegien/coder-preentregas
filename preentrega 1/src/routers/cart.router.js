@@ -4,14 +4,14 @@ import CartManager from "../managers/cart.manager.js";
 import { __dirname } from "../utils.js";
 const cartManager = new CartManager(`${__dirname}/data/carts.json`);
 
-router.post("/:idCart/product/:idProd", async (req, res, next) => {
+router.post("/:idCart/product/:idProd", async (req, res) => {
    try {
       const { idProd } = req.params;
       const { idCart } = req.params;
-      const response = await cartManager.saveProductToCart(idCart, idProd);
+      const response = await cartManager.ProductToCart(idCart, idProd);
       res.json(response);
    } catch (error) {
-    next(error);
+      console.log(error);
    }
 });
 

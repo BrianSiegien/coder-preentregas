@@ -26,7 +26,9 @@ export class ProductManager {
                 ...obj
             };            
             const products = await this.getProducts();
-            products.push(product)
+            const productExist = products.find((p) => p.title === product.title);
+            if(productExist) return console.log('product already exist');
+            else products.push(product)
             await fs.promises.writeFile(this.path, JSON.stringify(products));
             return product;
             } catch (error) {
