@@ -5,6 +5,9 @@ import { Server } from 'socket.io';
 import  productRouter from './routers/product.router.js'
 import cartRouter from './routers/cart.router.js'
 import viewRouter from './routers/view.router.js'
+import ProductManager from './managers/product.manager.js';
+
+const productManager = new ProductManager(`${__dirname}/data/products.json`)
 
 const app = express()
 
@@ -27,17 +30,23 @@ const socketServer = new Server(httpServer);
 
 const listaProductos = []
 
-socketServer.on("connection", (socket) =>{
-    console.log(`user connected ${socket.id}`);
+socketServer.on('connection', async (socket)=>{
+    console.log(`user connected: ${socket.id}`);
 
+    socket.emit('listaProductos', await productManager.getProducts())
 
-    socket.on('newProduct', (objProducto)=>{
-        listaProductos.push(objProducto)
-        socketServer.emit('productos', listaProductos)
+    socket.on('newProduct', async (newProduct) => {
+
+        productManager.createProduct(newProduct);
+        const productos = await productManager.getProducts();
+        socketServer.emit('products', productos);
+    });
+
+    socket.on('deleteProduct', async (id) => {
+        await productManager.deleteProduct(id);
+        const products = await productManager.getProducts();
+        socketServer.emit('products', products);
+
     })
+
 })
-
-
-
-
-

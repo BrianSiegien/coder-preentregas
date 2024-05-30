@@ -1,38 +1,24 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-</head>
-<body>
-    <h1>Lista de Productos</h1>
-    <ul>
-        <li>
-            <strong>Producto:</strong> Producto 1<br>
-            <strong>Precio:</strong> $10.00<br>
-            <strong>Stock:</strong> 50 unidades<br>
-            <strong>Descripción:</strong> Descripción del Producto 1<br>
-            <strong>Código:</strong> ABC123<br>
-            <strong>Categoría:</strong> Categoría A
-        </li><br>
-        <li>
-            <strong>Producto:</strong> Producto 2<br>
-            <strong>Precio:</strong> $20.00<br>
-            <strong>Stock:</strong> 30 unidades<br>
-            <strong>Descripción:</strong> Descripción del Producto 2<br>
-            <strong>Código:</strong> DEF456<br>
-            <strong>Categoría:</strong> Categoría B
-        </li><br>
-        <li>
-            <strong>Producto:</strong> Producto 3<br>
-            <strong>Precio:</strong> $15.00<br>
-            <strong>Stock:</strong> 20 unidades<br>
-            <strong>Descripción:</strong> Descripción del Producto 3<br>
-            <strong>Código:</strong> GHI789<br>
-            <strong>Categoría:</strong> Categoría A
-        </li>
-    </ul>
-</body>
-</html>
+<main class="home">
+  <h1> Vista de Productos</h1>
 
+  <form class="inputLimit" action="/" method="get">
+    <label for="limit">Cantidad de productos a visualizar:</label>
+    <input type="number" id="limit" name="limit" min="1" max="100" />
+    <button type="submit">lista productos</button>
+  </form>
+
+  <div class="productContainer">
+    {{#if productos.length}}
+    {{#each products}}
+      <div class="Prod">        
+        <h2>{{this.title}}</h2>
+        <p>{{this.description}}</p>
+        <div><p>{{this.price}} - Stock: {{this.stock}}</p></div>
+        </div>
+    {{/each}}
+    {{else}}
+    <h2>No hay productos para mostrar!</h2>
+{{/if}}
+  </div>
+
+</main>
